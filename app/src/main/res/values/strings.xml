@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">ReturnPointIreland</string>
+    <string name="app_name">ReturnPoint Ireland</string>
+    <string name="view_marks">View Marks</string>
+    <string name="add_mark">Add Mark</string>
+    <string name="mark_list_title">Marks</string>
+    <string name="return_to_menu">Return</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_x">X coordinate</string>
+    <string name="hint_y">Y coordinate</string>
 </resources>
