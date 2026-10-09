@@ -1,58 +1,79 @@
 package org.setu.returnpoint
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class AddEditActivity : AppCompatActivity() {
 
-    private lateinit var titleInput: EditText
-    private lateinit var descriptionInput: EditText
-    private lateinit var xInput: EditText
-    private lateinit var yInput: EditText
+    private lateinit var nameInput: TextInputEditText
+    private lateinit var addressInput: TextInputEditText
+    private lateinit var townInput: TextInputEditText
+    private lateinit var countyInput: AutoCompleteTextView
+    private lateinit var methodInput: AutoCompleteTextView
+    private lateinit var notesInput: TextInputEditText
 
-    private var editingId: Long? = null
+    private lateinit var nameLayout: TextInputLayout
+    private lateinit var addressLayout: TextInputLayout
+    private lateinit var townLayout: TextInputLayout
+    private lateinit var countyLayout: TextInputLayout
+
+    private var original: ReturnPoint? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_add_edit)
 
-        titleInput =
-            findViewById(R.id.titleInput)
+        nameInput = findViewById(R.id.nameInput)
+        addressInput = findViewById(R.id.addressInput)
+        townInput = findViewById(R.id.townInput)
+        countyInput = findViewById(R.id.countyInput)
+        methodInput = findViewById(R.id.methodInput)
+        notesInput = findViewById(R.id.notesInput)
 
-        descriptionInput =
-            findViewById(R.id.descriptionInput)
+        nameLayout = findViewById(R.id.nameLayout)
+        addressLayout = findViewById(R.id.addressLayout)
+        townLayout = findViewById(R.id.townLayout)
+        countyLayout = findViewById(R.id.countyLayout)
 
-        xInput =
-            findViewById(R.id.xInput)
+        countyInput.setAdapter(
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                irishCounties
+            )
+        )
 
-        yInput =
-            findViewById(R.id.yInput)
+        methodInput.setAdapter(
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                ReturnMethod.values().map { it.label }
+            )
+        )
+        methodInput.setText(ReturnMethod.UNKNOWN.label, false)
 
-        val saveButton =
-            findViewById<Button>(R.id.saveButton)
+        val saveButton = findViewById<Button>(R.id.saveButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
 
-        val cancelButton =
-            findViewById<Button>(R.id.cancelButton)
+        val id = intent.getLongExtra("id", -1L)
 
-        editingId =
-            intent.getLongExtra("id", -1L)
-                .takeIf { it != -1L }
-
-        if (editingId != null) {
-
+        if (id != -1L) {
             findViewById<TextView>(R.id.formTitle)
-                .text = "Edit Mark"
+                .setText(R.string.edit_point)
 
-            loadExistingMark(editingId!!)
+            loadExistingPoint(id)
         }
 
         saveButton.setOnClickListener {
-            saveMark()
+            savePoint()
         }
 
         cancelButton.setOnClickListener {
@@ -60,16 +81,14 @@ class AddEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadExistingMark(id: Long) {
+    private fun loadExistingPoint(id: Long) {
 
-        val mark =
-            AppData.placedMarks.findOne(id)
+        val point = AppData.returnPoints.findOne(id)
 
-        if (mark == null) {
-
+        if (point == null) {
             Toast.makeText(
                 this,
-                "Mark not found",
+                "Return point not found",
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -77,76 +96,53 @@ class AddEditActivity : AppCompatActivity() {
             return
         }
 
-        titleInput.setText(mark.title)
-        descriptionInput.setText(mark.desc)
-        xInput.setText(mark.x.toString())
-        yInput.setText(mark.y.toString())
+        original = point
+
+        nameInput.setText(point.name)
+        addressInput.setText(point.address)
+        townInput.setText(point.town)
+        countyInput.setText(point.county, false)
+        methodInput.setText(point.returnMethod.label, false)
+        notesInput.setText(point.notes)
     }
 
-    private fun saveMark() {
+    private fun savePoint() {
 
-        val title =
-            titleInput.text.toString().trim()
+        val method = ReturnMethod.values()
+            .find { it.label == methodInput.text.toString() }
+            ?: ReturnMethod.UNKNOWN
 
-        val description =
-            descriptionInput.text.toString().trim()
+        val draft = (original ?: ReturnPoint()).copy(
+            name = nameInput.text.toString().trim(),
+            address = addressInput.text.toString().trim(),
+            town = townInput.text.toString().trim(),
+            county = countyInput.text.toString(),
+            returnMethod = method,
+            notes = notesInput.text.toString().trim()
+        )
 
-        if (title.isEmpty()) {
-            titleInput.error = "Title is required"
+        val errors = validate(draft)
+
+        nameLayout.error = errors["name"]
+        addressLayout.error = errors["address"]
+        townLayout.error = errors["town"]
+        countyLayout.error = errors["county"]
+
+        if (errors.isNotEmpty()) {
             return
         }
 
-        val x =
-            xInput.text.toString().toDoubleOrNull()
-
-        if (x == null) {
-            xInput.error = "Enter a valid number"
-            return
-        }
-
-        val y =
-            yInput.text.toString().toDoubleOrNull()
-
-        if (y == null) {
-            yInput.error = "Enter a valid number"
-            return
-        }
-
-        if (editingId == null) {
-
-            val mark = PlacedMark(
-                title = title,
-                desc = description,
-                x = x,
-                y = y
-            )
-
-            AppData.placedMarks.create(mark)
-
-            Toast.makeText(
-                this,
-                "Mark created",
-                Toast.LENGTH_SHORT
-            ).show()
-
+        if (original == null) {
+            AppData.returnPoints.create(draft)
         } else {
-
-            val mark = PlacedMark(
-                id = editingId!!,
-                title = title,
-                desc = description,
-                x = x,
-                y = y
-            )
-
-            AppData.placedMarks.update(mark)
-
-            Toast.makeText(
-                this,
-                "Mark updated",
-                Toast.LENGTH_SHORT
-            ).show()
+            AppData.returnPoints.update(draft)
         }
+
+        Toast.makeText(
+            this,
+            "Return point saved",
+            Toast.LENGTH_SHORT
+        ).show()
 
         finish()
     }

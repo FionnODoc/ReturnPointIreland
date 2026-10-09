@@ -15,7 +15,7 @@
             android:name=".AddEditActivity"
             android:exported="false" />
         <activity
-            android:name=".MarkListActivity"
+            android:name=".ReturnPointListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
