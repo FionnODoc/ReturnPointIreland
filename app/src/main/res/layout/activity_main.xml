@@ -18,16 +18,16 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/viewMarksButton"
+        android:id="@+id/viewPointsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/view_marks" />
+        android:text="@string/view_points" />
 
     <Button
-        android:id="@+id/addMarkButton"
+        android:id="@+id/addPointButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/add_mark" />
+        android:text="@string/add_point" />
 
 </LinearLayout>

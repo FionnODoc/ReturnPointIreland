@@ -1,15 +1,20 @@
 <resources>
     <string name="app_name">ReturnPoint Ireland</string>
-    <string name="view_marks">View Marks</string>
-    <string name="add_mark">Add Mark</string>
-    <string name="mark_list_title">Marks</string>
+    <string name="view_points">View Return Points</string>
+    <string name="add_point">Add Return Point</string>
+    <string name="edit_point">Edit Return Point</string>
+    <string name="point_list_title">Return Points</string>
+    <string name="empty_list">No return points yet. Add one from the menu.</string>
     <string name="return_to_menu">Return</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="hint_title">Title</string>
-    <string name="hint_description">Description</string>
-    <string name="hint_x">X coordinate</string>
-    <string name="hint_y">Y coordinate</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_town">Town</string>
+    <string name="hint_county">County</string>
+    <string name="hint_method">Return method</string>
+    <string name="hint_notes">Notes (optional)</string>
+    <string name="demo_label">Demo</string>
 </resources>

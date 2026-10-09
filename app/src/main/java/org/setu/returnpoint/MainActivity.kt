@@ -18,19 +18,19 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val viewMarksButton =
-            findViewById<Button>(R.id.viewMarksButton)
+        val viewPointsButton =
+            findViewById<Button>(R.id.viewPointsButton)
 
-        val addMarkButton =
-            findViewById<Button>(R.id.addMarkButton)
+        val addPointButton =
+            findViewById<Button>(R.id.addPointButton)
 
-        viewMarksButton.setOnClickListener {
+        viewPointsButton.setOnClickListener {
             startActivity(
-                Intent(this, MarkListActivity::class.java)
+                Intent(this, ReturnPointListActivity::class.java)
             )
         }
 
-        addMarkButton.setOnClickListener {
+        addPointButton.setOnClickListener {
             startActivity(
                 Intent(this, AddEditActivity::class.java)
             )
