@@ -17,4 +17,6 @@
     <string name="hint_method">Return method</string>
     <string name="hint_notes">Notes (optional)</string>
     <string name="demo_label">Demo</string>
+    <string name="delete_dialog_title">Delete return point?</string>
+    <string name="delete_dialog_message">This cannot be undone.</string>
 </resources>
