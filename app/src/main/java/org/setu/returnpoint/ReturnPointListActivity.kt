@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ReturnPointListActivity : AppCompatActivity() {
 
@@ -31,7 +32,7 @@ class ReturnPointListActivity : AppCompatActivity() {
             },
 
             onDelete = { point ->
-                deletePoint(point)
+                confirmDelete(point)
             }
         )
 
@@ -69,6 +70,17 @@ class ReturnPointListActivity : AppCompatActivity() {
         intent.putExtra("id", point.id)
 
         startActivity(intent)
+    }
+
+    private fun confirmDelete(point: ReturnPoint) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.delete_dialog_title)
+            .setMessage(R.string.delete_dialog_message)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.delete) { _, _ ->
+                deletePoint(point)
+            }
+            .show()
     }
 
     private fun deletePoint(point: ReturnPoint) {
