@@ -2,12 +2,14 @@ package org.setu.returnpoint
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ReturnPointListActivity : AppCompatActivity() {
@@ -20,6 +22,8 @@ class ReturnPointListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_return_point_list)
+
+        setSupportActionBar(findViewById<MaterialToolbar>(R.id.toolbar))
 
         recyclerView = findViewById(R.id.pointsRecyclerView)
         emptyText = findViewById(R.id.emptyText)
@@ -38,14 +42,19 @@ class ReturnPointListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+    }
 
-        val returnButton = findViewById<Button>(R.id.returnButton)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_list, menu)
+        return true
+    }
 
-        returnButton.setOnClickListener {
-            startActivity(
-                Intent(this, MainActivity::class.java)
-            )
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_add) {
+            startActivity(Intent(this, AddEditActivity::class.java))
+            return true
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {

@@ -13,10 +13,12 @@
         android:theme="@style/Theme.ReturnPointIreland">
         <activity
             android:name=".AddEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/add_point" />
         <activity
             android:name=".ReturnPointListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/point_list_title" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

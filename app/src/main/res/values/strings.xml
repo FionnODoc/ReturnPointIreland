@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">ReturnPoint Ireland</string>
-    <string name="view_points">View Return Points</string>
     <string name="add_point">Add Return Point</string>
     <string name="edit_point">Edit Return Point</string>
     <string name="point_list_title">Return Points</string>
     <string name="empty_list">No return points yet. Add one from the menu.</string>
-    <string name="return_to_menu">Return</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_list">View list</string>
+    <string name="main_intro">Your own list of deposit return points in Ireland. Use the menu above to add a point or view your list.</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>

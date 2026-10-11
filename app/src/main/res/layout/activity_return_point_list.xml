@@ -3,17 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".ReturnPointListActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/point_list_title"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
 
     <TextView
         android:id="@+id/emptyText"
@@ -21,6 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:padding="16dp"
         android:text="@string/empty_list"
         android:visibility="gone" />
 
@@ -28,13 +26,8 @@
         android:id="@+id/pointsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/returnButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/return_to_menu" />
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="16dp" />
 
 </LinearLayout>
