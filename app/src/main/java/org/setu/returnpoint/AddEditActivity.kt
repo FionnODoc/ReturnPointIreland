@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -30,6 +30,8 @@ class AddEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_add_edit)
+
+        setSupportActionBar(findViewById<MaterialToolbar>(R.id.toolbar))
 
         nameInput = findViewById(R.id.nameInput)
         addressInput = findViewById(R.id.addressInput)
@@ -66,8 +68,7 @@ class AddEditActivity : AppCompatActivity() {
         val id = intent.getLongExtra("id", -1L)
 
         if (id != -1L) {
-            findViewById<TextView>(R.id.formTitle)
-                .setText(R.string.edit_point)
+            setTitle(R.string.edit_point)
 
             loadExistingPoint(id)
         }
