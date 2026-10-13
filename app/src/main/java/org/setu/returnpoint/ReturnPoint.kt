@@ -44,3 +44,17 @@ fun validate(point: ReturnPoint): Map<String, String> {
 
     return errors
 }
+
+fun searchPoints(points: List<ReturnPoint>, query: String): List<ReturnPoint> {
+    val text = query.trim()
+
+    if (text.isEmpty()) {
+        return points
+    }
+
+    return points.filter { p ->
+        p.name.contains(text, ignoreCase = true) ||
+            p.address.contains(text, ignoreCase = true) ||
+            p.town.contains(text, ignoreCase = true)
+    }
+}
