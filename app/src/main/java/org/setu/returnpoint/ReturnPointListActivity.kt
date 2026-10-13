@@ -7,15 +7,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 
 class ReturnPointListActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyText: TextView
+    private lateinit var searchInput: TextInputEditText
     private lateinit var adapter: ReturnPointAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,7 @@ class ReturnPointListActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.pointsRecyclerView)
         emptyText = findViewById(R.id.emptyText)
+        searchInput = findViewById(R.id.searchInput)
 
         adapter = ReturnPointAdapter(
             points = AppData.returnPoints.findAll(),
@@ -42,6 +46,10 @@ class ReturnPointListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        searchInput.doAfterTextChanged {
+            refreshList()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,11 +71,15 @@ class ReturnPointListActivity : AppCompatActivity() {
     }
 
     private fun refreshList() {
-        val points = AppData.returnPoints.findAll()
+        val query = searchInput.text?.toString().orEmpty()
+        val points = searchPoints(AppData.returnPoints.findAll(), query)
 
         adapter.updatePoints(points)
 
         val isEmpty = points.isEmpty()
+        emptyText.setText(
+            if (query.isBlank()) R.string.empty_list else R.string.no_matches
+        )
         emptyText.visibility = if (isEmpty) View.VISIBLE else View.GONE
         recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }

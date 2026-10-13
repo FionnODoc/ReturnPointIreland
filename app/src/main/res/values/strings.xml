@@ -4,6 +4,8 @@
     <string name="edit_point">Edit Return Point</string>
     <string name="point_list_title">Return Points</string>
     <string name="empty_list">No return points yet. Add one from the menu.</string>
+    <string name="no_matches">No return points match your search.</string>
+    <string name="hint_search">Search name, address or town</string>
     <string name="menu_add">Add</string>
     <string name="menu_list">View list</string>
     <string name="main_intro">Your own list of deposit return points in Ireland. Use the menu above to add a point or view your list.</string>
