@@ -58,3 +58,14 @@ fun searchPoints(points: List<ReturnPoint>, query: String): List<ReturnPoint> {
             p.town.contains(text, ignoreCase = true)
     }
 }
+
+fun filterPoints(
+    points: List<ReturnPoint>,
+    county: String?,
+    method: ReturnMethod?
+): List<ReturnPoint> {
+    return points.filter { p ->
+        (county == null || p.county == county) &&
+            (method == null || p.returnMethod == method)
+    }
+}
