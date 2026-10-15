@@ -45,6 +45,10 @@ fun validate(point: ReturnPoint): Map<String, String> {
     return errors
 }
 
+fun mapsQuery(point: ReturnPoint): String {
+    return "${point.name}, ${point.address}, ${point.town}, Co. ${point.county}, Ireland"
+}
+
 fun searchPoints(points: List<ReturnPoint>, query: String): List<ReturnPoint> {
     val text = query.trim()
 

@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 class ReturnPointAdapter(
     private var points: List<ReturnPoint>,
     private val onEdit: (ReturnPoint) -> Unit,
-    private val onDelete: (ReturnPoint) -> Unit
+    private val onDelete: (ReturnPoint) -> Unit,
+    private val onMap: (ReturnPoint) -> Unit
 ) : RecyclerView.Adapter<ReturnPointAdapter.PointViewHolder>() {
 
     class PointViewHolder(itemView: View) :
@@ -33,6 +34,9 @@ class ReturnPointAdapter(
 
         val deleteButton: Button =
             itemView.findViewById(R.id.deleteButton)
+
+        val mapButton: Button =
+            itemView.findViewById(R.id.mapButton)
     }
 
     override fun onCreateViewHolder(
@@ -73,6 +77,10 @@ class ReturnPointAdapter(
 
         holder.deleteButton.setOnClickListener {
             onDelete(point)
+        }
+
+        holder.mapButton.setOnClickListener {
+            onMap(point)
         }
     }
 

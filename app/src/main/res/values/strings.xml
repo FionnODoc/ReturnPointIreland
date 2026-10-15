@@ -14,6 +14,8 @@
     <string name="main_intro">Your own list of deposit return points in Ireland. Use the menu above to add a point or view your list.</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="map">Map</string>
+    <string name="no_maps_app">No maps app found on this device.</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="hint_name">Name</string>
