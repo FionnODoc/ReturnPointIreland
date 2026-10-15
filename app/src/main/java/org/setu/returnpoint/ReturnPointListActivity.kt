@@ -1,6 +1,8 @@
 package org.setu.returnpoint
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +51,10 @@ class ReturnPointListActivity : AppCompatActivity() {
 
             onDelete = { point ->
                 confirmDelete(point)
+            },
+
+            onMap = { point ->
+                openInMaps(point)
             }
         )
 
@@ -156,6 +163,17 @@ class ReturnPointListActivity : AppCompatActivity() {
         intent.putExtra("id", point.id)
 
         startActivity(intent)
+    }
+
+    private fun openInMaps(point: ReturnPoint) {
+        val uri = Uri.parse("geo:0,0?q=" + Uri.encode(mapsQuery(point)))
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.no_maps_app, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun confirmDelete(point: ReturnPoint) {
